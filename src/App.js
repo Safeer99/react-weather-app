@@ -1,4 +1,4 @@
-import { Container, LinearProgress, styled } from "@mui/material";
+import { Container, LinearProgress } from "@mui/material";
 import FutureData from "./components/FutureData";
 import Main from "./components/Main";
 import SearchBar from "./components/SearchBar";
