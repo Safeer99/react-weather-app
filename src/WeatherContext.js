@@ -21,25 +21,24 @@ const WeatherContext = ({ children }) => {
         fetchFutureData(location)
     }
 
+    function showError(err) {
+        alert(err.message)
+    }
+
+    function showPosition(position) {
+        const currentLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+        fetchData(currentLocation)
+    }
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.")
+        }
+    }
+
     useEffect(() => {
-        function showPosition(position) {
-            const currentLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-            fetchData(currentLocation)
-        }
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-                    if (result.state === 'granted') {
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                    } else if (result.state === 'denied') {
-                        alert("can't access your location")
-                        getLocation()
-                    }
-                })
-            } else {
-                alert("Geolocation is not supported by this browser.")
-            }
-        }
         getLocation()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
